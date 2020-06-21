@@ -1,0 +1,17 @@
+{% extends "layout.html"%}
+
+{% block heading %}
+Faz's book store
+{% endblock %}
+{% block body %}
+<h1>{{title}}</h1>
+{% for book in books %}
+<li>{{book}}</li>
+{% endfor %}
+<form action="{{ url_for('hello') }}" method="POST">
+    <input type="text" name="name" placeholder="Enter your name">
+    <button>Submit</button>
+</form>
+
+<a href="{{ url_for('notepad') }}">Notepad Area.</a>
+{% endblock %}

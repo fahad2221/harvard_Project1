@@ -1,16 +1,13 @@
 {% extends "layout.html"%}
-
 {% block heading %}
-Faz's book store
+The notepad
 {% endblock %}
 
-{% block body %}
-Welcome to the notepad area
-
+{%block body%}
 <ul>
-    {%for note in notes %}
+    {%for note in notes%}
     <li>{{note}}</li>
-    {% endfor %}
+    {%endfor%}
 </ul>
 
 <form action="{{url_for('notepad')}}" method="POST">
@@ -18,6 +15,5 @@ Welcome to the notepad area
     <button>Add Note</button>
 </form>
 
-<a href="{{ url_for('index') }}">Back</a>
-
-{% endblock %}
+<a href="{{url_for('index')}}">Back</a>
+{%endblock%}

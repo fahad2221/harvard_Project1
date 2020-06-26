@@ -1,0 +1,23 @@
+{% extends "layout.html"%}
+
+{% block heading %}
+Faz's book store
+{% endblock %}
+
+{%block body%}
+
+
+<!--Should be form-->
+<a href="{{url_for('index')}}">To the notepad</a>
+<form action="{{url_for('booked')}}" method="post">
+<select class="form-control" name="flight_id">
+{%for flight in flights %}
+    <option value="{{flight.id}}">{{flight.origin}} to {{flight.destination}}</option>
+{%endfor%}
+</select>
+
+<input class="form-control" name="name" placeholder="Passenger Name">
+<button>Book Flight</button>
+</form>
+
+{%endblock%}

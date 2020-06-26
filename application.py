@@ -24,15 +24,34 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def index():
-    title = "hi"
-    return render_template("index.html",title=title)
+    flights = db.execute("SELECT * FROM flights").fetchall()
+    return render_template("index.html", flights=flights)
 
 @app.route("/notepad", methods=["GET","POST"])
 def notepad():
-    
     if request.method =="POST":
         note = request.form.get("note")
         session["notes"].append(note)
     if session.get("notes") is None:
         session["notes"]=[]
     return render_template("notepad.html",notes=session["notes"])
+
+@app.route("/book")
+def book():
+    flights = db.execute("SELECT * FROM flights").fetchall()
+    return render_template("book.html",flights=flights)
+
+@app.route("/booked", methods=["POST"])
+def booked():
+    name = request.form.get("name")
+    try:
+        flight_id = request.form.get("flight_id")
+    except ValueError:
+        return render_template("error.html", message="Invalid flight number")
+    
+    if db.execute("SELECT*FROM flights WHERE id=:id", {"id": flight_id}).rowcount == 0:
+        return render_template("error.html", message="No such flight with that id.")
+    db.execute("INSERT INTO passengers (name, flight_id) VALUES (:name, :flight_id)", {"name":name,"flight_id":flight_id})
+    db.commit()
+    return render_template("booked.html")
+    

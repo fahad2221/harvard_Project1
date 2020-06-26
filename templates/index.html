@@ -4,8 +4,17 @@
 Faz's book store
 {% endblock %}
 {% block body %}
-<h1>{{title}}</h1>
+
+{%for flight in flights%}
+
+<ul>
+    <li>{{flight.origin}} to {{flight.destination}}, {{flight.duration}} minutes.</li>
+</ul>
+
+{%endfor%}
 
 <a href="{{url_for('notepad')}}">To the notepad</a>
+
+<a href="{{url_for('book')}}">To the booking page</a>
 
 {% endblock %}
